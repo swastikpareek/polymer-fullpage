@@ -1,0 +1,429 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!-- Importing Polymer Library -->
+
+<link rel="import" href="../paper-styles/color.html">
+
+<!-- Including jQuery -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
+<script src="bower_components/fullpage.js/vendors/jquery.easings.min.js"></script>
+
+<!-- This following line is only necessary in the case of using the plugin option `scrollOverflow:true` -->
+<script type="text/javascript" src="bower_components/fullpage.js/vendors/scrolloverflow.min.js"></script>
+
+<!-- Including full page .js  -->
+<script type="text/javascript" src="bower_components/fullpage.js/dist/jquery.fullPage.js"></script>
+
+<!-- Including full page.js css code -->
+<link rel="stylesheet" type="text/css" href="bower_components/fullpage.js/jquery.fullPage.css" />
+
+<!--
+
+The `polymer-fullpage` uses fullpage js library found <a href="http://www.alvarotrigo.com/fullPage/"> Full Page JS</a>
+
+    <polymer-fullpage
+        section-selector="slides"
+        fit-to-section-delay="600"
+        ....>
+      </polymer-fullpage>
+  All properties are the mapping of the actual property of the <strong>Full Page.js</strong> library
+@demo demo/index.html
+-->
+
+<dom-module id="polymer-fullpage">
+  <template>
+    <style>
+      :root{
+        --polymer-fullpage-content: {
+          width: 100%;
+          font-size: 32px;
+          text-align: center;
+        }
+      }
+      :host {
+        display: block;
+        height: 100%;
+      }
+      .polymer-fullpage-wrapper ::content > .slide{
+        @apply(--polymer-fullpage-content);
+      }
+    </style>
+
+    <div id="polymerFullPageJsWrapper" class="polymer-fullpage-wrapper"><content></content></div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'polymer-fullpage',
+
+      /**
+       * Fired when slides leaves animation (onLeave of base library).
+       * <br/>
+       * Accepts fn(index, nextIndex, direction) available inside e.detail
+       *
+       * @event onLeave
+       * @event onLeave
+       */
+
+      /**
+       * Fired after all slides loaded (afterLoad of base library).
+       * <br/>
+       * Accepts fn(anchorLink, index) available inside e.detail
+       *
+       * @event afterLoad
+       * @event afterLoad
+       */
+
+      /**
+       * This callback is fired just after the structure of the page is <br/>
+       * generated (afterRender of base library).
+       *
+       * @event afterRender
+       * @event afterRender
+       */
+
+      /**
+       * This callback is fired after resizing the browser's window. <br/>
+       * Just after the sections are resized (afterResize of base library).
+       *
+       * @event afterResize
+       * @event afterResize
+       */
+
+      /**
+       * This callback is fired after fullpage.js changes from normal to responsive <br/>
+       * mode or from responsive mode to normal mode (afterResponsive of base library).
+       * <br/>
+       * Accepts fn(isResponsive) available inside e.detail
+       *
+       * @event afterLoad
+       * @event afterLoad
+       */
+
+      /**
+       * Callback fired once the slide of a section have been loaded, <br/>
+       *  after the scrolling has ended (afterResponsive of base library).
+       * <br/>
+       * Accepts fn(anchorLink, index, slideAnchor, slideIndex) available inside e.detail
+       *
+       * @event afterSlideLoad
+       * @event afterSlideLoad
+       */
+
+      /**
+       * This callback is fired once the user leaves an slide to go to another, <br/>
+       * in the transition to the new slide (afterResponsive of base library).
+       * <br/>
+       * Accepts fn(anchorLink, index, slideIndex, direction, nextSlideIndex) available inside e.detail
+       *
+       * @event onSlideLeave
+       * @event onSlideLeave
+       */
+
+      properties: {
+        //Navigation
+        menu: {
+          type: String,
+          value: '#menu',
+        },
+        lockAnchors: {
+          type: Boolean,
+          value : false,
+        },
+        anchors: {
+          type: Array,
+          value: [],
+        },
+        navigation: {
+          type: Boolean,
+          value: false,
+        },
+        navigationPosition: {
+          type: String,
+          value: 'right',
+        },
+        navigationTooltips: {
+          type: Array,
+          value: [],
+        },
+        showActiveTooltip: {
+          type: Boolean,
+          value: false,
+        },
+        slidesNavigation: {
+          type: Boolean,
+          value: true,
+        },
+        slidesNavPosition: {
+          type: String,
+          value: 'bottom',
+        },
+        //Scrolling
+        css3: {
+          type:Boolean,
+          value: true,
+        },
+        scrollingSpeed: {
+          type: Number,
+          value: 500,
+        },
+        autoScrolling: {
+          type: Boolean,
+          value: true,
+        },
+        fitToSection: {
+          type: Boolean,
+          value: true,
+        },
+        fitToSectionDelay: {
+          type: Number,
+          value: 300,
+        },
+        scrollBar: {
+          type: Boolean,
+          value: false,
+        },
+        easing: {
+          type: String,
+          value: 'easeInOutCubic',
+        },
+        easingcss3: {
+          type: String,
+          value: 'ease',
+        },
+        loopBottom: {
+          type: Boolean,
+          value: false,
+        },
+        loopTop: {
+          type: Boolean,
+          value: false,
+        },
+        loopHorizontal: {
+          type: Boolean,
+          value: true,
+        },
+        continuousVertical: {
+          type: Boolean,
+          value: false,
+        },
+        continuousHorizontal: {
+          type: Boolean,
+          value: false,
+        },
+        scrollHorizontally: {
+          type: Boolean,
+          value:false,
+        },
+        interlockedSlides: {
+          type: Boolean,
+          value: false,
+        },
+        resetSliders: {
+          type: Boolean,
+          value: false,
+        },
+        fadingEffect: {
+          type: Boolean,
+          value: false,
+        },
+        normalScrollElements: {
+          type: String,
+          value: '',
+        },
+        scrollOverflow: {
+          type: Boolean,
+          value: false,
+        },
+        scrollOverflowOptions: {
+          type: String,
+          value: null,
+        },
+        touchSensitivity: {
+          type: Number,
+          value: 30,
+        },
+        normalScrollElementTouchThreshold: {
+          type: Number,
+          value: 5,
+        },
+        bigSectionsDestination: {
+          type: String,
+          value: null,
+        },
+        //Accessibility
+        keyboardScrolling: {
+          type: Boolean,
+          value: true,
+        },
+        animateAnchor: {
+          type: Boolean,
+          value: true,
+        },
+        recordHistory: {
+          type: Boolean,
+          value: true,
+        },
+        //Design
+        controlArrows: {
+          type: Boolean,
+          value: true,
+        },
+        verticalCentered: {
+          type: Boolean,
+          value: true,
+        },
+        sectionsColor: {
+          type: Array,
+          value: [],
+        },
+        paddingTop: {
+          type: String,
+          value: '0',
+        },
+        paddingBottom: {
+          type: String,
+          value: '0',
+        },
+        fixedElements: {
+          type: String,
+          value: '.fixed-element',
+        },
+        responsiveWidth: {
+          type: Number,
+          value: 0,
+        },
+        responsiveHeight: {
+          type: Boolean,
+          value: 0,
+        },
+        responsiveSlides: {
+          type: Boolean,
+          value: false,
+        },
+        //Custom selectors
+        sectionSelector: { // private property
+          type: String,
+          value: '.slide',
+        },
+        slideSelector: {
+          type: String,
+          value: '.sub-slide',
+        },
+      },
+      /**
+       * Returns all the options passed to the library
+       */
+      getOptions: function(){
+        var self = this;
+        return {
+          menu: self.menu ,
+          lockAnchors: self.lockAnchors,
+          anchors:self.anchors,
+          navigation: self.navigation,
+          navigationPosition: self.navigationPosition ,
+          navigationTooltips: self.navigationTooltips ,
+          showActiveTooltip: self.showActiveTooltip,
+          slidesNavigation: self.slidesNavigation,
+          slidesNavPosition: self.slidesNavPosition,
+
+          css3: self.css3,
+          scrollingSpeed: self.scrollingSpeed,
+          autoScrolling: self.autoScrolling,
+          fitToSection: self.fitToSection,
+          fitToSectionDelay: self.fitToSectionDelay,
+          scrollBar: self.scrollBar,
+          easing: self.easing,
+          easingcss3: self.easingcss3,
+          loopBottom: self.loopBottom,
+          loopTop: self.loopTop,
+          loopHorizontal: self.loopHorizontal,
+          continuousVertical: self.continuousVertical,
+          continuousHorizontal: self.continuousHorizontal,
+          scrollHorizontally: self.scrollHorizontally,
+          interlockedSlides: self.interlockedSlides,
+          resetSliders: self.resetSliders,
+          fadingEffect: self.fadingEffect,
+          normalScrollElements: self.normalScrollElements,
+          scrollOverflow: self.scrollOverflow,
+          scrollOverflowOptions: self.scrollOverflowOptions,
+          touchSensitivity: self.touchSensitivity,
+          normalScrollElementTouchThreshold: self.normalScrollElementTouchThreshold,
+          bigSectionsDestination: self.bigSectionsDestination,
+
+          keyboardScrolling: self.keyboardScrolling,
+          animateAnchor: self.animateAnchor,
+          recordHistory: self.recordHistory,
+
+          controlArrows: self.controlArrows,
+          verticalCentered: self.verticalCentered,
+          sectionsColor : self.sectionsColor,
+          paddingTop: self.paddingTop,
+          paddingBottom: self.paddingBottom,
+          fixedElements: self.fixedElements,
+          responsiveWidth: self.responsiveWidth,
+          responsiveHeight: self.responsiveHeight,
+          responsiveSlides: self.responsiveSlides,
+
+          sectionSelector: self.sectionSelector,
+          slideSelector: self.slideSelector,
+
+          // predefined events
+          onLeave: function(index, nextIndex, direction){
+            self.fire( 'onLeave', { index: index,
+                                    nextIndex: nextIndex,
+                                    direction: direction });
+          },
+          afterLoad: function(anchorLink, index){
+            self.fire( 'afterLoad' , { anchorLink: anchorLink,
+                                      index: index });
+          },
+          afterRender: function(){
+            self.fire( 'afterRender');
+          },
+          afterResize: function(){
+            self.fire( 'afterResize');
+          },
+          afterResponsive: function(isResponsive){
+            self.fire( 'afterResize', { isResponsive : isResponsive });
+          },
+          afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){
+            self.fire( 'afterSlideLoad', { anchorLink: anchorLink,
+                                          index: index,
+                                          slideAnchor: slideAnchor,
+                                          slideIndex: slideIndex });
+          },
+          onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){
+            self.fire( 'onSlideLeave', { anchorLink: anchorLink,
+                                         index: index,
+                                         slideIndex: slideIndex,
+                                         direction: direction,
+                                         nextSlideIndex: nextSlideIndex });
+          },
+        };
+      },
+      ready: function(){
+        var self = this;
+        var options = self.getOptions();
+        // namespacing jQuery to $
+        (function($){
+          $(document).ready(function(){
+            $(self.$.polymerFullPageJsWrapper).fullpage(options);
+          });
+        })(jQuery);
+
+      }
+    });
+  </script>
+</dom-module>
