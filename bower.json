@@ -11,4 +11,10 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   }
+  "keywords": [
+    "js-library",
+    "jquery",
+    "fullpage.js",
+    "web-components",
+  ],
 }
