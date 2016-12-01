@@ -26,5 +26,5 @@ This will include the `polymer-fullpage` component to your application
 ```
 <polymer-fullpage attr=""><div class="slide">Slide 1</div><div class="slide">Slide 2</div><div class="slides">Slide 3</div></poymer-fullpage>
 ```
-You can see the [docs and demo here](#)
+You can see the [docs and demo here](https://swastikpareek.github.io/polymer-fullpage/)
 
