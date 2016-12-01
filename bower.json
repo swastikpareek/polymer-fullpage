@@ -11,7 +11,6 @@
   ],
   "license": "MIT",
   "ignore": [
-    "bower_components",
     "test",
     "tests"
   ],
