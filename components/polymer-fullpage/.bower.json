@@ -1,0 +1,38 @@
+{
+  "name": "polymer-fullpage",
+  "main": [
+    "polymer-fullpage.html"
+  ],
+  "description": " Polymer Module which uses fullpage.js",
+  "keywords": [
+    "fullpage.js",
+    "jquery",
+    "web-components"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "fullpage.js": "^2.8.8"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/swastikpareek/polymer-fullpage",
+  "_release": "245cf123fb",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "245cf123fb2fb076d1276d4766af52ba900d8f21"
+  },
+  "_source": "https://github.com/swastikpareek/polymer-fullpage.git",
+  "_target": "master",
+  "_originalSource": "swastikpareek/polymer-fullpage",
+  "_direct": true
+}
